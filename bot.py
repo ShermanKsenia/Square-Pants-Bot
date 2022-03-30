@@ -186,7 +186,8 @@ def send_another_stat(call):
         chat_id=call.from_user.id,
         photo=open('./pics/characters.png', 'rb'),
         caption='*The similarity between the characters.*\n' +\
-            'The closer the dots are, the more similar the characters are')
+            'The closer the dots are, the more similar the characters are',
+        parse_mode='Markdown')
         bot.edit_message_text(
             chat_id=call.from_user.id,
             message_id=call.message.message_id, 
