@@ -106,7 +106,8 @@ def send_statistics(call):
     for i in range(0, len(topics)-1, 2):
         markup.add(types.InlineKeyboardButton(topics[i][:-1], callback_data=f'{char}_{topics[i]}_personal_info'),
                     types.InlineKeyboardButton(topics[i+1][:-1], callback_data=f'{char}_{topics[i+1]}_personal_info'))
-    markup.add(types.InlineKeyboardButton(topics[-1][:-1], callback_data=f'{char}_{topics[-1]}_personal_info'))
+    if len(topics) % 2 == 0:
+        markup.add(types.InlineKeyboardButton(topics[-1][:-1], callback_data=f'{char}_{topics[-1]}_personal_info'))
     markup.add(types.InlineKeyboardButton('Return to the characters', callback_data='button2'))
     if len(char_top) == 1:
         bot.edit_message_text(
