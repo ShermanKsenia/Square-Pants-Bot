@@ -76,7 +76,7 @@ class DBHelper:
         GROUP BY correct_ans
         ORDER BY cnt DESC
         '''
-        if  cur.execute(most_difficult_guess_query, (user_id, )).fetchone()[2:] == None:
+        if  cur.execute(most_difficult_guess_query, (user_id, )).fetchone() == None:
             bot_answer = f'*Correct answers:* {correct_ans}\n' + \
                 f'*All answers:* {all_ans}\n' + \
                 f'*Ratio of correct answers:* {round(correct_ans/all_ans, 2)}\n' +\
