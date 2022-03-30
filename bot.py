@@ -27,8 +27,6 @@ with open('episodes.json') as f_ep:
 with open('personal_info.json') as f_per:
     per_info = json.load(f_per)
 
-topics = list(per_info['SpongeBob SquarePants']['gen_info'].keys())
-
 char_to_char = {
     'SpongeBob': 'SpongeBob SquarePants',
     'Patrick': 'Patrick Star',
@@ -102,6 +100,8 @@ def send_statistics(call):
 def send_statistics(call):
     char_top = call.data[:-14].split('_')
     char = char_top[0]
+    char1 = char_to_char[char]
+    topics = list(per_info[char1]['gen_info'].keys())
     markup = types.InlineKeyboardMarkup()
     for i in range(0, len(topics)-1, 2):
         markup.add(types.InlineKeyboardButton(topics[i][:-1], callback_data=f'{char}_{topics[i]}_personal_info'),
@@ -230,8 +230,8 @@ def answer(call):
         if call.data == answer:
             db.add_item_rates(user_id=call.from_user.id, user_ans=call.data, correct_ans=answer, if_correct=1)
             bot.send_sticker(
-                call.from_user.id,
-                random.choice(happy))
+                chat_id=call.from_user.id,
+                sticker=random.choice(happy))
             bot.edit_message_text(
                 chat_id=call.from_user.id, 
                 message_id=call.message.message_id, 
@@ -240,8 +240,8 @@ def answer(call):
         else:
             db.add_item_rates(user_id=call.from_user.id, user_ans=call.data, correct_ans=answer, if_correct=0)
             bot.send_sticker(
-                call.from_user.id,
-                random.choice(sad))
+                chat_id=call.from_user.id,
+                sticker=random.choice(sad))
             bot.edit_message_text(
                 chat_id=call.from_user.id, 
                 message_id=call.message.message_id, 
@@ -368,8 +368,8 @@ def add_name(message):
         chat_id=message.chat.id,
         text='I don\'t understand. Please, write /start to return to the bot.')
     bot.send_sticker(
-        message.chat.id,
-        random.choice(funny))
+        chat_id=message.chat.id,
+        sticker=random.choice(funny))
 
 
 if __name__ == '__main__':
