@@ -230,8 +230,8 @@ def answer(call):
         if call.data == answer:
             db.add_item_rates(user_id=call.from_user.id, user_ans=call.data, correct_ans=answer, if_correct=1)
             bot.send_sticker(
-                chat_id=call.from_user.id,
-                sticker=random.choice(happy))
+                call.from_user.id,
+                random.choice(happy))
             bot.edit_message_text(
                 chat_id=call.from_user.id, 
                 message_id=call.message.message_id, 
@@ -240,8 +240,8 @@ def answer(call):
         else:
             db.add_item_rates(user_id=call.from_user.id, user_ans=call.data, correct_ans=answer, if_correct=0)
             bot.send_sticker(
-                chat_id=call.from_user.id,
-                sticker=random.choice(sad))
+                call.from_user.id,
+                random.choice(sad))
             bot.edit_message_text(
                 chat_id=call.from_user.id, 
                 message_id=call.message.message_id, 
@@ -368,8 +368,8 @@ def add_name(message):
         chat_id=message.chat.id,
         text='I don\'t understand. Please, write /start to return to the bot.')
     bot.send_sticker(
-        chat_id=message.chat.id,
-        sticker=random.choice(funny))
+        message.chat.id,
+        random.choice(funny))
 
 
 if __name__ == '__main__':
