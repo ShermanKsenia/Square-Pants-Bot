@@ -76,12 +76,17 @@ class DBHelper:
         GROUP BY correct_ans
         ORDER BY cnt DESC
         '''
-        mistakes, most_difficult_guess = cur.execute(most_difficult_guess_query, (user_id, )).fetchone()[2:]
-
-        bot_answer = f'*Correct answers:* {correct_ans}\n' + \
+        if  cur.execute(most_difficult_guess_query, (user_id, )).fetchone()[2:] == None:
+            bot_answer = f'*Correct answers:* {correct_ans}\n' + \
                 f'*All answers:* {all_ans}\n' + \
                 f'*Ratio of correct answers:* {round(correct_ans/all_ans, 2)}\n' +\
-                f'*Most difficult guess:* {most_difficult_guess}, *mistakes:* {mistakes}'
+                f'*Most difficult guess:* you are 100% correct, *mistakes:* none'
+        else:
+            mistakes, most_difficult_guess = cur.execute(most_difficult_guess_query, (user_id, )).fetchone()[2:]
+            bot_answer = f'*Correct answers:* {correct_ans}\n' + \
+                    f'*All answers:* {all_ans}\n' + \
+                    f'*Ratio of correct answers:* {round(correct_ans/all_ans, 2)}\n' +\
+                    f'*Most difficult guess:* {most_difficult_guess}, *mistakes:* {mistakes}'
         
         return bot_answer
 
