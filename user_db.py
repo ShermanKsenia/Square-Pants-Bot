@@ -100,7 +100,7 @@ class DBHelper:
             if user[-1] == user_id:
                 place = i
         bot_answer = '\n'.join(
-            [f'{i+1}. *{top_5[i][0]}* has *{top_5[i][1]}* right answers' for i in range(len(rating))]) + \
+            [f'{i+1}. *{top_5[i][0]}* has *{top_5[i][1]}* right answers' for i in range(len(top_5))]) + \
             '\n' + '-'*10 +\
             f'\nYour place in the leaderboard: {place+1}'
 
