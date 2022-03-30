@@ -77,25 +77,6 @@ def send_own_stat(call):
         text=f'Choose the statistics you want to know', 
         reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda call: call.data.endswith('_stat'))
-def send_statistics(call):
-    markup = types.InlineKeyboardMarkup()
-    personal = types.InlineKeyboardButton(text="Personal info", callback_data=f"{call.data[:-5]}_personal_info")
-    episode = types.InlineKeyboardButton(text='Info about lines and episodes', callback_data=f'{call.data[:-5]}_episode_info')
-    markup.add(personal)
-    markup.add(episode)
-    char = call.data[:-5]
-    char2 = char_to_char[char]
-    if char in characters:
-        bot.send_photo(
-            chat_id=call.from_user.id,
-            photo=open(f'./pics/{char}.png', 'rb'),
-            caption=per_info[char2]['short_info'])
-    bot.send_message(
-        chat_id=call.from_user.id,
-        text='Choose which iformation you want to learn',
-        reply_markup=markup)
-
 @bot.callback_query_handler(func=lambda call: call.data.endswith('personal_info'))
 def send_statistics(call):
     char_top = call.data[:-14].split('_')
@@ -129,6 +110,24 @@ def send_statistics(call):
             reply_markup=markup,
             parse_mode="Markdown")
 
+@bot.callback_query_handler(func=lambda call: call.data.endswith('_stat'))
+def send_statistics(call):
+    markup = types.InlineKeyboardMarkup()
+    personal = types.InlineKeyboardButton(text="Personal info", callback_data=f"{call.data[:-5]}_personal_info")
+    episode = types.InlineKeyboardButton(text='Info about lines and episodes', callback_data=f'{call.data[:-5]}_episode_info')
+    markup.add(personal)
+    markup.add(episode)
+    char = call.data[:-5]
+    char2 = char_to_char[char]
+    if char in characters:
+        bot.send_photo(
+            chat_id=call.from_user.id,
+            photo=open(f'./pics/{char}.png', 'rb'),
+            caption=per_info[char2]['short_info'])
+    bot.send_message(
+        chat_id=call.from_user.id,
+        text='Choose which iformation you want to learn',
+        reply_markup=markup)
 
 @bot.callback_query_handler(func=lambda call: call.data.endswith('episode_info'))
 def send_statistics(call):
@@ -185,7 +184,9 @@ def send_another_stat(call):
         bot_message = bot_message_most + bot_message_least
         bot.send_photo(
         chat_id=call.from_user.id,
-        photo=open('./pics/Sponge Bobs Big Birthday Blowout.png', 'rb'))
+        photo=open('./pics/characters.png', 'rb'),
+        caption='The similarity between the characters.' +\
+            'The closer the dots are, the more similar the characters are')
         bot.edit_message_text(
             chat_id=call.from_user.id,
             message_id=call.message.message_id, 
@@ -273,8 +274,8 @@ def speech_game(call):
     if call.data == 'button1':
         game_rules = '*RULES*\n' + \
             'The bot will send you a sentence which was ' + \
-            'the line of one of the character or was made by the model. ' + \
-            'Your aim is to guess who said the line or was it artificially created'
+            'the line of one of the character or was created by the machine - model. ' + \
+            'Your goal is to guess who said the line or was it artificially created'
         bot.send_message(
             call.message.chat.id, 
             text=game_rules,
@@ -371,7 +372,6 @@ def add_name(message):
     bot.send_sticker(
         message.chat.id,
         random.choice(funny))
-
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
