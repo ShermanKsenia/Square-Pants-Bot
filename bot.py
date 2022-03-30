@@ -240,8 +240,8 @@ def answer(call):
         else:
             db.add_item_rates(user_id=call.from_user.id, user_ans=call.data, correct_ans=answer, if_correct=0)
             bot.send_sticker(
-            chat_id=call.from_user.id,
-            sticker=random.choice(sad))
+                chat_id=call.from_user.id,
+                sticker=random.choice(sad))
             bot.edit_message_text(
                 chat_id=call.from_user.id, 
                 message_id=call.message.message_id, 
