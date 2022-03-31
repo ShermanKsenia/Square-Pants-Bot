@@ -1,5 +1,6 @@
 # SquarePants Bot
 ## Проект по текстам мультипликационного сериала "SpongeBob SquarePants"
+Бот: @square_pants_bot
 Данные, котрые использовались:
 
 Сайт фандома мультсериала: https://spongebob.fandom.com/wiki/Encyclopedia_SpongeBobia
